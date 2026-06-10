@@ -9,6 +9,7 @@ $patients = $request->fetchAll(PDO::FETCH_ASSOC);
 
 <?php require_once "../_partials/_head.php" ?>
 
+<h1>Liste de patients</h1>
 <ol>
     <?php foreach ($patients as $patient) { ?>
         <li><?= $patient['lastname'] . " " . $patient['firstname'] ?></li>
