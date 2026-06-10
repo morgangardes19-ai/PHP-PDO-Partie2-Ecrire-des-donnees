@@ -5,7 +5,7 @@
 
 <?php require_once "../_partials/_head.php" ?>
 
-<?php 
+<?php
 if (isset($_GET['error'])) {
     switch ($_GET['error']) {
         case 'bad-method':
@@ -16,37 +16,56 @@ if (isset($_GET['error'])) {
 ?>
 
 <!-- Créer une page ajout-patient.php et y créer un formulaire permettant de créer un patient. Elle doit être accessible depuis la page index.php. -->
-<section class="flex flex-col items-center justify-center border border-solid bg-blue-300">
-    <form action="../process/ajout-patient.php" method="post">
-        <div>
-            <label for="nom">Indiquez ici votre nom</label>
-            <input type="text" name="nom" id="nom">
-        </div>
 
-        <div>
-            <label for="prenom">Indiquez ici votre prénom</label>
-            <input type="text" name="prenom" id="prenom">
-        </div>
 
-        <div>
-            <label for="date">Quelle est votre date de naissance ?</label>
-            <input type="date" name="date" id="date">
-        </div>
 
-        <div>
-            <label for="telephone">Quel est votre numéro de téléphone</label>
-            <input type="tel" name="telephone" id="telephone">
-        </div>
+<section class="flex justify-center overflow-hidden rounded-xl bg-white shadow-lg">
+    <table class="">
+        <form action="../process/ajout-patient.php" method="post" class="">
+            <div class="">
+                <div class="">
+                    <tr>
+                        <td><label for="nom">Indiquez ici le nom du patient :</label></td>
+                        <td><input type="text" name="nom" id="nom" class="border border-black"></td>
+                    </tr>
+                </div>
 
-        <div>
-            <label for="email">A quelle adresse email êtes-vous joignable ?</label>
-            <input type="email" name="email" id="email">
-        </div>
+                <div class="">
+                    <tr>
+                        <td><label for="prenom">Indiquez ici le prénom du patient :</label></td>
+                        <td><input type="text" name="prenom" id="prenom" class="border border-black"></td>
+                    </tr>
+                </div>
 
-        <div>
-            <button type="submit">Création du patient</button>
-        </div>
-    </form>
+                <div class="">
+                    <tr>
+                        <td><label for="date">Quelle est sa date de naissance ?</label></td>
+                        <td><input type="date" name="date" id="date" class="border border-black"></td>
+                    </tr>
+                </div>
+
+                <div class="">
+                    <tr>
+                        <td><label for="telephone">Quel est son numéro de téléphone ?</label></td>
+                        <td><input type="tel" name="telephone" id="telephone" class="border border-black"></td>
+                    </tr>
+                </div>
+
+                <div class="">
+                    <tr>
+                        <td><label for="email">A quelle adresse email est-il joignable ?</label></td>
+                        <td><input type="email" name="email" id="email" class="border border-black"></td>
+                    </tr>
+                </div>
+            </div>
+
+            <div class="">
+                <tr>
+                    <td><button type="submit" class="border border-black">Création du patient</button></td>
+                </tr>
+            </div>
+        </form>
+    </table>
 </section>
 
 
