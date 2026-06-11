@@ -48,31 +48,31 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
             <tbody>
 
                 <?php foreach ($patients as $patient) { ?>
-                        <tr class="border-b hover:bg-blue-50 transition">
-                            <td class="px-6 py-4 font-medium text-slate-800">
-                                <?= htmlspecialchars($patient['lastname']) ?>
-                            </td>
+                    <tr class="border-b hover:bg-blue-50 transition">
+                        <td class="px-6 py-4 font-medium text-slate-800">
+                            <?= htmlspecialchars($patient['lastname']) ?>
+                        </td>
 
-                            <td class="px-6 py-4 text-slate-600">
-                                <?= htmlspecialchars($patient['firstname']) ?>
-                            </td>
+                        <td class="px-6 py-4 text-slate-600">
+                            <?= htmlspecialchars($patient['firstname']) ?>
+                        </td>
 
-                    <td class="px-6 py-4 flex justify-center gap-4">
+                        <td class="px-6 py-4 flex justify-center gap-4">
 
-                        <a
-                            href="./profil-patient.php?id=<?= $patient['id'] ?>">
-                            <img src="../assets/images/voir.png" alt="profil patient" class=" hover:scale-110 transition">
-                        </a>
-                        <a
-                            href="#">
-                            <img src="../assets/images/stylo.png" alt="modifier patient" class=" hover:scale-110 transition">
-                        </a>
-                        <a
-                            href="#">
-                            <img src="../assets/images/supprimer.png" alt="modifier patient" class=" hover:scale-110 transition">
-                        </a>
+                            <a
+                                href="./profil-patient.php?id=<?= $patient['id'] ?>">
+                                <img src="../assets/images/voir.png" alt="profil patient" class=" hover:scale-110 transition">
+                            </a>
+                            <a
+                                href="#">
+                                <img src="../assets/images/stylo.png" alt="modifier patient" class=" hover:scale-110 transition">
+                            </a>
+                            <a
+                                href="#">
+                                <img src="../assets/images/supprimer.png" alt="modifier patient" class=" hover:scale-110 transition">
+                            </a>
 
-                    </td>
+                        </td>
                     </tr>
 
                 <?php } ?>

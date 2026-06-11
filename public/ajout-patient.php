@@ -20,53 +20,42 @@ if (isset($_GET['error'])) {
 
 
 <section class="flex justify-center overflow-hidden rounded-xl bg-white shadow-lg">
-    <table class="">
-        <form action="../process/ajout-patient.php" method="post" class="">
-            <div class="">
-                <div class="">
-                    <tr>
-                        <td><label for="nom">Indiquez ici le nom du patient :</label></td>
-                        <td><input type="text" name="nom" id="nom" class="border border-black"></td>
-                    </tr>
-                </div>
 
-                <div class="">
-                    <tr>
-                        <td><label for="prenom">Indiquez ici le prénom du patient :</label></td>
-                        <td><input type="text" name="prenom" id="prenom" class="border border-black"></td>
-                    </tr>
-                </div>
-
-                <div class="">
-                    <tr>
-                        <td><label for="date">Quelle est sa date de naissance ?</label></td>
-                        <td><input type="date" name="date" id="date" class="border border-black"></td>
-                    </tr>
-                </div>
-
-                <div class="">
-                    <tr>
-                        <td><label for="telephone">Quel est son numéro de téléphone ?</label></td>
-                        <td><input type="tel" name="telephone" id="telephone" class="border border-black"></td>
-                    </tr>
-                </div>
-
-                <div class="">
-                    <tr>
-                        <td><label for="email">A quelle adresse email est-il joignable ?</label></td>
-                        <td><input type="email" name="email" id="email" class="border border-black"></td>
-                    </tr>
-                </div>
-            </div>
-
-            <div class="">
+    <form action="../process/ajout-patient.php" method="post">
+        <table>
+            <thead>
                 <tr>
-                    <td><button type="submit" class="border border-black">Création du patient</button></td>
+                    <th>Informations du patient</th>
+                    <th>Champ à remplir</th>
                 </tr>
-            </div>
-        </form>
-    </table>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><label for="nom" class="bg-blue-900 text-white rounded-xl px-16 py-32">Indiquez ici le nom du patient :</label></td>
+                    <td><input type="text" name="nom" id="nom" class="border border-black rounded-xl"></td>
+                </tr>
+                <tr>
+                    <td><label for="prenom" class="bg-blue-900 text-white rounded-xl px-16 py-32">Indiquez ici le prénom du patient :</label></td>
+                    <td><input type="text" name="prenom" id="prenom" class="border border-black rounded-xl"></td>
+                </tr>
+                <tr>
+                    <td><label for="date" class="bg-blue-900 text-white rounded-xl px-16 py-32">Quelle est sa date de naissance ?</td>
+                    <td><input type="date" name="date" id="date" class="border border-black rounded-xl"></td>
+                </tr>
+                <tr>
+                    <td><label for="telephone" class="bg-blue-900 text-white rounded-xl px-16 py-32">Quel est son numéro de téléphone ?</label></td>
+                    <td><input type="tel" name="telephone" id="telephone" class="border border-black rounded-xl"></td>
+                </tr>
+                <tr>
+                    <td><label for="email" class="bg-blue-900 text-white rounded-xl px-16 py-32">A quelle adresse email est-il joignable ?</label></td>
+                    <td><input type="email" name="email" id="email" class="border border-black rounded-xl"></td>
+                </tr>
+            </tbody>
+            <tr>
+                <td><button type="submit" class="border border-black">Création du patient</button></td>
+            </tr>
+        </table>
+    </form>
 </section>
-
 
 <?php require_once "../_partials/_footer.php" ?>
