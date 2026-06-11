@@ -52,7 +52,7 @@ if (isset($_GET['error'])) {
                 </tr>
             </tbody>
             <tr>
-                <td><button type="submit" class="border border-black">Création du patient</button></td>
+                <td><input type="submit" class="border border-black" value="Création du patient"></input></td>
             </tr>
         </table>
     </form>

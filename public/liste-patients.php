@@ -64,7 +64,7 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
                                 <img src="../assets/images/voir.png" alt="profil patient" class=" hover:scale-110 transition">
                             </a>
                             <a
-                                href="#">
+                                href="./update-patient.php?id=<?= $patient['id'] ?>">
                                 <img src="../assets/images/stylo.png" alt="modifier patient" class=" hover:scale-110 transition">
                             </a>
                             <a
