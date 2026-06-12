@@ -3,8 +3,6 @@
 // var_dump($db);
 ?>
 
-<?php require_once "../_partials/_head.php" ?>
-
 <?php
 if (isset($_GET['error'])) {
     switch ($_GET['error']) {
@@ -14,27 +12,27 @@ if (isset($_GET['error'])) {
     }
 }
 ?>
-<!--  PARTIE SECURITE A VERIFIER -->
+<!-- PARTIE SECURITE  -->
 <?php
-// require_once "../utils/db_connect.php";
+require_once "../utils/db_connect.php";
 
-// if ($_SERVER['REQUEST_METHOD'] !== "GET") {
-//     header("Location: ./liste-patient.php?error=bad-method");
-//     exit();
-// }
+if ($_SERVER['REQUEST_METHOD'] !== "GET") {
+    header("Location: ./liste-patient.php?error=bad-method");
+    exit();
+}
 
-// if (!isset($_GET['id'])) {
-//     header("Location: ./liste-patient.php?error=missing-value");
-//     exit();
-// }
+if (!isset($_GET['id'])) {
+    header("Location: ./liste-patient.php?error=missing-value");
+    exit();
+}
 
-// if (empty($_GET['id'])) {
-//     header("Location: ./liste-patient.php?error=value-empty");
-//     exit();
-// }
+if (empty($_GET['id'])) {
+    header("Location: ./liste-patient.php?error=value-empty");
+    exit();
+}
 ?>
 
-<?php 
+<?php
 $patientId = htmlspecialchars(trim($_GET['id']));
 $request = $db->prepare("SELECT * FROM patients WHERE patients.id = :id");
 $request->execute([
@@ -45,6 +43,7 @@ $clientUnique = $request->fetch(PDO::FETCH_ASSOC);
 var_dump($clientUnique);
 ?>
 
+<?php require_once "../_partials/_head.php" ?>
 
 <section class="flex justify-center overflow-hidden rounded-xl bg-white shadow-lg">
 
@@ -57,6 +56,7 @@ var_dump($clientUnique);
                 </tr>
             </thead>
             <tbody>
+
                 <tr>
                     <td><label for="nom" class="bg-blue-900 text-white rounded-xl px-16 py-32">Nom du patient :</label></td>
                     <td><input type="text" name="nom" id="nom" class="border border-black rounded-xl" value="<?= $clientUnique['lastname'] ?>"></td>
@@ -79,7 +79,9 @@ var_dump($clientUnique);
                 </tr>
             </tbody>
             <tr>
-                <td><input type="submit" class="border border-black" value="Modifier"></input></td>
+                <input type="hidden" name="id" id="id" class="border border-black rounded-xl" value="<?= $clientUnique['id'] ?>">
+
+                <td><button type="submit" class="border border-black">Modifier</button></td>
             </tr>
         </table>
     </form>

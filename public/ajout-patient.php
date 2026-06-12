@@ -3,7 +3,7 @@
 // var_dump($db);
 ?>
 
-<?php require_once "../_partials/_head.php" ?>
+
 
 <?php
 if (isset($_GET['error'])) {
@@ -14,7 +14,7 @@ if (isset($_GET['error'])) {
     }
 }
 ?>
-
+<?php require_once "../_partials/_head.php" ?>
 <!-- Créer une page ajout-patient.php et y créer un formulaire permettant de créer un patient. Elle doit être accessible depuis la page index.php. -->
 
 
