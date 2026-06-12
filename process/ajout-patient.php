@@ -1,6 +1,6 @@
 <?php require_once "../utils/db_connect.php"; ?>
 
-<?php 
+<?php
 
 // Partie sécuritée
 if ($_SERVER['REQUEST_METHOD'] !== "POST") {

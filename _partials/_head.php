@@ -15,10 +15,10 @@
             <img src="../assets/images/logo-hospiflow.png" alt="logo hospiflow" class="h-16 w-16 rounded-lg">
         </a>
         <nav class="flex gap-4">
+            <a href="./index.php">Accueil</a>
             <a href="./ajout-patient.php">Ajout Patient</a>
             <a href="./liste-patients.php">Liste Patient</a>
-            <a href="">test</a>
-            <a href="">test</a>
+            <a href="./ajout-rendezvous.php">Ajout Rendez-vous</a>
         </nav>
 
     </header>

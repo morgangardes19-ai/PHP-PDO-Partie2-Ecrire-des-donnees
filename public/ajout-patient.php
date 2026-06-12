@@ -15,9 +15,6 @@ if (isset($_GET['error'])) {
 }
 ?>
 <?php require_once "../_partials/_head.php" ?>
-<!-- Créer une page ajout-patient.php et y créer un formulaire permettant de créer un patient. Elle doit être accessible depuis la page index.php. -->
-
-
 
 <section class="flex justify-center overflow-hidden rounded-xl bg-white shadow-lg">
 
@@ -26,7 +23,7 @@ if (isset($_GET['error'])) {
             <thead>
                 <tr>
                     <th>Informations du patient</th>
-                    <th>Champ à remplir</th>
+                    <th>Date du rendez-vous</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +49,7 @@ if (isset($_GET['error'])) {
                 </tr>
             </tbody>
             <tr>
-                <td><input type="submit" class="border border-black" value="Création du patient"></input></td>
+                <td><button type="submit" class="border border-black">Création du patient</button></td>
             </tr>
         </table>
     </form>

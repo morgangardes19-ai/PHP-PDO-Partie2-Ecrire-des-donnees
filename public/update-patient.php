@@ -40,7 +40,7 @@ $request->execute([
 ]);
 
 $clientUnique = $request->fetch(PDO::FETCH_ASSOC);
-var_dump($clientUnique);
+// var_dump($clientUnique);
 ?>
 
 <?php require_once "../_partials/_head.php" ?>
