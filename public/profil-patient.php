@@ -28,7 +28,6 @@ $request->execute([
 ]);
 
 $clientUnique = $request->fetch(PDO::FETCH_ASSOC);
-// var_dump($clientUnique);
 ?>
 
 <?php require_once "../_partials/_head.php" ?>
@@ -71,18 +70,5 @@ $clientUnique = $request->fetch(PDO::FETCH_ASSOC);
         </tbody>
     </table>
 </div>
-
-<!-- Partie modification des informations du patient -->
- <!-- <?php   
-// $request = $db->prepare("UPDATE patients SET id");
-// $request->execute([
-//     ":id" => $patientId
-// ]);
- ?>
-
-
-<div class ="flex justify-center">
-    <button type="text" name="infos" id="infos">Modifier</button>
-</div> -->
 
 <?php require_once "../_partials/_footer.php" ?>

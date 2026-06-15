@@ -1,27 +1,13 @@
 <?php
 require_once "../utils/db_connect.php";
 
-// $request = $db->query("SELECT * FROM appointments JOIN patients ON patients.id = appointments.patient_id ORDER BY datehour DESC");
-// $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
-
-// var_dump($rdvs);
-
-//  ============== Finir la requête prepare qui prend uniquement : lastname, firstname, datehour, il faut l'id aussi ? ==================
-// $request = $db->prepare("SELECT patients.lastname, patients.firstname, appointments.datehour FROM patients JOIN appointments ON patients.id = appointments.patient_id WHERE appointments.datehour = :datehour");
-// $request->execute([
-//     ":datehour" => $datehour
-// ]);
-$request = $db->query("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients JOIN appointments ON patients.id = appointments.patient_id");
-
-$rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
-
-// var_dump($rdvs);
-// =======================================================================================================================================
-
 if (isset($_GET['create']) && !empty($_GET['create'])) {
     $createSuccess = htmlspecialchars(trim($_GET['create']));
 }
 
+$request = $db->query("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients JOIN appointments ON patients.id = appointments.patient_id");
+
+$rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -66,7 +52,7 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
                 <?php foreach ($rdvs as $rdv) { ?>
                     <tr class="border-b hover:bg-blue-50 transition">
                         <td class="px-6 py-4 font-medium text-slate-800 text-center">
-                            <?= htmlspecialchars($rdv['lastname']) ?>
+                            <?= htmlspecialchars(strtoupper($rdv['lastname'])) ?>
                         </td>
 
                         <td class="px-6 py-4 text-slate-600 text-center">
@@ -76,10 +62,10 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
                         <td class="px-6 py-4 text-slate-600 text-center">
                             <?= htmlspecialchars($rdv['datehour']) ?>
                         </td>
-                        <td>
+                        <td class="px-6 py-4 text-slate-600 flex justify-center">
                             <a
                                 href="./rendezvous.php?id=<?= $rdv['id'] ?>">
-                                <img src="../assets/images/voir.png" alt="profil patient" class=" hover:scale-110 transition">
+                                <img src="../assets/images/voir.png" alt="detail patient" class=" hover:scale-110 transition" >
                             </a>
                         </td>
                     </tr>

@@ -39,8 +39,8 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
 
             <thead class="bg-blue-900 text-white">
                 <tr>
-                    <th class="px-6 py-4 text-left">Nom</th>
-                    <th class="px-6 py-4 text-left">Prénom</th>
+                    <th class="px-6 py-4 text-center">Nom</th>
+                    <th class="px-6 py-4 text-center">Prénom</th>
                     <th class="px-6 py-4 text-center">Action</th>
                 </tr>
             </thead>
@@ -49,11 +49,11 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
 
                 <?php foreach ($patients as $patient) { ?>
                     <tr class="border-b hover:bg-blue-50 transition">
-                        <td class="px-6 py-4 font-medium text-slate-800">
-                            <?= htmlspecialchars($patient['lastname']) ?>
+                        <td class="px-6 py-4 font-medium text-slate-800  text-center">
+                            <?= htmlspecialchars(strtoupper($patient['lastname'])) ?>
                         </td>
 
-                        <td class="px-6 py-4 text-slate-600">
+                        <td class="px-6 py-4 text-slate-600  text-center">
                             <?= htmlspecialchars($patient['firstname']) ?>
                         </td>
 
@@ -69,7 +69,7 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
                             </a>
                             <a
                                 href="#">
-                                <img src="../assets/images/supprimer.png" alt="modifier patient" class=" hover:scale-110 transition">
+                                <img src="../assets/images/supprimer.png" alt="supprimer patient" class=" hover:scale-110 transition">
                             </a>
 
                         </td>

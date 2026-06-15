@@ -14,8 +14,6 @@ if (isset($_GET['error'])) {
 ?>
 <!-- PARTIE SECURITE  -->
 <?php
-require_once "../utils/db_connect.php";
-
 if ($_SERVER['REQUEST_METHOD'] !== "GET") {
     header("Location: ./liste-patient.php?error=bad-method");
     exit();
@@ -45,7 +43,7 @@ $clientUnique = $request->fetch(PDO::FETCH_ASSOC);
 
 <?php require_once "../_partials/_head.php" ?>
 
-<section class="flex justify-center overflow-hidden rounded-xl bg-white shadow-lg">
+<section class="flex justify-center items-center overflow-hidden rounded-xl bg-white shadow-lg">
 
     <form action="../process/update-patient.php" method="post">
         <table>
@@ -58,32 +56,33 @@ $clientUnique = $request->fetch(PDO::FETCH_ASSOC);
             <tbody>
 
                 <tr>
-                    <td><label for="nom" class="bg-blue-900 text-white rounded-xl px-16 py-32">Nom du patient :</label></td>
+                    <td><label for="nom" class="bg-blue-900 text-white rounded-xl inline-block w-full px-4">Nom du patient :</label></td>
                     <td><input type="text" name="nom" id="nom" class="border border-black rounded-xl" value="<?= $clientUnique['lastname'] ?>"></td>
                 </tr>
                 <tr>
-                    <td><label for="prenom" class="bg-blue-900 text-white rounded-xl px-16 py-32">Prénom du patient :</label></td>
+                    <td><label for="prenom" class="bg-blue-900 text-white rounded-xl inline-block w-full px-4">Prénom du patient :</label></td>
                     <td><input type="text" name="prenom" id="prenom" class="border border-black rounded-xl" value="<?= $clientUnique['firstname'] ?>"></td>
                 </tr>
                 <tr>
-                    <td><label for="date" class="bg-blue-900 text-white rounded-xl px-16 py-32">Date de naissance</td>
+                    <td><label for="date" class="bg-blue-900 text-white rounded-xl inline-block w-full px-4">Date de naissance</td>
                     <td><input type="date" name="date" id="date" class="border border-black rounded-xl" value="<?= $clientUnique['birthdate'] ?>"></td>
                 </tr>
                 <tr>
-                    <td><label for="telephone" class="bg-blue-900 text-white rounded-xl px-16 py-32">Numéro de téléphone</label></td>
+                    <td><label for="telephone" class="bg-blue-900 text-white rounded-xl inline-block w-full px-4">Numéro de téléphone</label></td>
                     <td><input type="tel" name="telephone" id="telephone" class="border border-black rounded-xl" value="<?= $clientUnique['phone'] ?>"></td>
                 </tr>
                 <tr>
-                    <td><label for="email" class="bg-blue-900 text-white rounded-xl px-16 py-32">Email</label></td>
+                    <td><label for="email" class="bg-blue-900 text-white rounded-xl inline-block w-full px-4">Email</label></td>
                     <td><input type="email" name="email" id="email" class="border border-black rounded-xl" value="<?= $clientUnique['mail'] ?>"></td>
                 </tr>
             </tbody>
-            <tr>
-                <input type="hidden" name="id" id="id" class="border border-black rounded-xl" value="<?= $clientUnique['id'] ?>">
 
-                <td><button type="submit" class="border border-black">Modifier</button></td>
-            </tr>
         </table>
+        <div class="flex justify-center">
+            <input type="hidden" name="id" id="id" class="border border-black rounded-xl" value="<?= $clientUnique['id'] ?>">
+
+            <button type="submit" class="border-2 rounded xs border-black bg-blue-500 text-white px-2">Modifier</button>
+        </div>
     </form>
 </section>
 

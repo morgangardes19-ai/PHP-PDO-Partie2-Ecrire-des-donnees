@@ -20,7 +20,7 @@ if (empty($_POST['nom']) || empty($_POST['prenom']) || empty($_POST['date']) || 
 }
 
 // Input sanitization
-// trim : surpprime les espaces -> "Morgan " -> "Morgan"
+// trim : surpprime les espaces -> "Nom " -> "Nom"
 // htmlspecialchars() : transforme les caractères HTML <script> qui devient : &lt;script&gt;
 $nom = htmlspecialchars(trim($_POST['nom']));
 $prenom = htmlspecialchars(trim($_POST['prenom']));
@@ -40,7 +40,5 @@ $success = $request->execute([
 ]);
 ?>
 
-<?php require_once "../_partials/_head.php" ?>
 <?php header("Location: ../public/liste-patients.php");
 exit(); ?>
-<?php require_once "../_partials/_footer.php" ?>
