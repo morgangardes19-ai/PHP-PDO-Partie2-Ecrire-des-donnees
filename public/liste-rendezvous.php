@@ -7,13 +7,15 @@ require_once "../utils/db_connect.php";
 // var_dump($rdvs);
 
 //  ============== Finir la requête prepare qui prend uniquement : lastname, firstname, datehour, il faut l'id aussi ? ==================
-$request = $db->prepare("SELECT patients.lastname, patients.firstname FROM patients JOIN appointments ON patients.id = appointments.patient_id WHERE patients.id = :");
-$request->execute([
-    ":" => $
-]);
-$rdvs = $request->fetch(PDO::FETCH_ASSOC);
+// $request = $db->prepare("SELECT patients.lastname, patients.firstname, appointments.datehour FROM patients JOIN appointments ON patients.id = appointments.patient_id WHERE appointments.datehour = :datehour");
+// $request->execute([
+//     ":datehour" => $datehour
+// ]);
+$request = $db->query("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients JOIN appointments ON patients.id = appointments.patient_id");
 
-var_dump($rdvs);
+$rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
+
+// var_dump($rdvs);
 // =======================================================================================================================================
 
 if (isset($_GET['create']) && !empty($_GET['create'])) {
@@ -53,39 +55,47 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
 
             <thead class="bg-blue-900 text-white">
                 <tr>
-                    <th class="px-6 py-4 text-left">Nom</th>
-                    <th class="px-6 py-4 text-left">Prénom</th>
+                    <th class="px-6 py-4 text-center">Nom</th>
+                    <th class="px-6 py-4 text-center">Prénom</th>
                     <th class="px-6 py-4 text-center">Date et Heure du Rendez-vous</th>
+                    <th class="px-6 py-4 text-center">Détail</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php foreach ($rdvs as $rdv) { ?>
                     <tr class="border-b hover:bg-blue-50 transition">
-                        <td class="px-6 py-4 font-medium text-slate-800">
+                        <td class="px-6 py-4 font-medium text-slate-800 text-center">
                             <?= htmlspecialchars($rdv['lastname']) ?>
                         </td>
 
-                        <td class="px-6 py-4 text-slate-600">
+                        <td class="px-6 py-4 text-slate-600 text-center">
                             <?= htmlspecialchars($rdv['firstname']) ?>
                         </td>
 
-                        <td class="px-6 py-4 text-slate-600">
+                        <td class="px-6 py-4 text-slate-600 text-center">
                             <?= htmlspecialchars($rdv['datehour']) ?>
+                        </td>
+                        <td>
+                            <a
+                                href="./rendezvous.php?id=<?= $rdv['id'] ?>">
+                                <img src="../assets/images/voir.png" alt="profil patient" class=" hover:scale-110 transition">
+                            </a>
                         </td>
                     </tr>
 
                 <?php } ?>
-                <div class="mt-8 flex justify-center">
-                    <a
-                        href="../public/ajout-rendezvous.php"
-                        class="rounded-lg bg-slate-700 px-6 py-3 text-white hover:bg-slate-800 transition">
-                        Redirigez-vous vers la création de rendez-vous
-                    </a>
-                </div>
             </tbody>
         </table>
     </div>
+    <div class="mt-8 flex justify-center">
+        <a
+            href="../public/ajout-rendezvous.php"
+            class="rounded-lg bg-slate-700 px-6 py-3 text-white hover:bg-slate-800 transition">
+            Redirigez-vous vers la création de rendez-vous
+        </a>
+    </div>
 </div>
+
 
 <?php require_once "../_partials/_footer.php" ?>
