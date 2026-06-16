@@ -47,7 +47,6 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
                     <th class="px-6 py-4 text-center">Détail</th>
                 </tr>
             </thead>
-
             <tbody>
                 <?php foreach ($rdvs as $rdv) { ?>
                     <tr class="border-b hover:bg-blue-50 transition">
@@ -65,16 +64,14 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
                         <td class="px-6 py-4 text-slate-600 flex justify-center gap-4">
                             <a
                                 href="./rendezvous.php?id=<?= $rdv['id'] ?>">
-                                <img src="../assets/images/voir.png" alt="detail patient" class=" hover:scale-110 transition" >
+                                <img src="../assets/images/voir.png" alt="detail patient" class=" hover:scale-110 transition">
                             </a>
                             <a
                                 href="./update-rdv.php?id=<?= $rdv['id'] ?>">
                                 <img src="../assets/images/stylo.png" alt="modifier patient" class=" hover:scale-110 transition">
                             </a>
                         </td>
-                    
                     </tr>
-
                 <?php } ?>
             </tbody>
         </table>
@@ -87,6 +84,5 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
         </a>
     </div>
 </div>
-
 
 <?php require_once "../_partials/_footer.php" ?>
