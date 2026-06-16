@@ -28,6 +28,16 @@ $request->execute([
 ]);
 
 $clientUnique = $request->fetch(PDO::FETCH_ASSOC);
+
+
+$request = $db->prepare("SELECT * FROM appointments WHERE appointments.patient_id = :id");
+$request->execute([
+    ":id" => $patientId
+]);
+
+$rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($rdvs);
+// die();
 ?>
 
 <?php require_once "../_partials/_head.php" ?>
@@ -71,4 +81,32 @@ $clientUnique = $request->fetch(PDO::FETCH_ASSOC);
     </table>
 </div>
 
+
+
+<!-- PARTIE AFFICHAGE LISTE DE RDV DU PATIENT -->
+<div class="overflow-hidden bg-white shadow-lg flex justify-center">
+    <?php 
+    if (empty($rdvs)) { ?>
+        <p>Pas de rendez-vous prévu</p>
+   <?php } else { ?>
+    
+   
+    <table class="w-100 border-2">
+
+        <thead class="bg-blue-900 text-white">
+            <tr>
+                <th class="px-4 py-2 text-center">Date et heure de ses rendez-vous</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($rdvs as $rdv) { ?>
+                <td class="px-6 py-4 text-slate-600 text-center">
+                    <?= htmlspecialchars($rdv['datehour']) ?>
+                </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+<?php } ?>
+</div>
 <?php require_once "../_partials/_footer.php" ?>

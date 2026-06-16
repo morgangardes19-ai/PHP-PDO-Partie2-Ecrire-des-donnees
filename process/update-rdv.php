@@ -22,9 +22,9 @@ if (empty($_POST['date']) || empty($_POST['id'])) {
 $date = htmlspecialchars(trim($_POST['date']));
 $id = htmlspecialchars(trim($_POST['id']));
 
-$request = $db->prepare("UPDATE appointments SET datehour = :date WHERE appointments.id = :id");
+$request = $db->prepare("UPDATE appointments SET datehour = :dateRdv WHERE appointments.id = :id");
 $success = $request->execute([
-    ":date" => $date,
+    ":dateRdv" => $date,
     ":id" => $id
 ]);
 ?>
