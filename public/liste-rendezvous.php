@@ -26,13 +26,11 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
         </p>
     </div>
 
+     <!-- Message de confirmation de creation de patient -->
     <?php if (isset($createSuccess) && $createSuccess === "1") { ?>
-
-        <!-- Message de confirmation de creation de patient -->
         <div class="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 text-green-700">
             Le rendez-vous a bien été ajouté à la liste.
         </div>
-
     <?php } ?>
 
     <!-- Tableau -->
@@ -69,6 +67,10 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
                             <a
                                 href="./update-rdv.php?id=<?= $rdv['id'] ?>">
                                 <img src="../assets/images/stylo.png" alt="modifier patient" class=" hover:scale-110 transition">
+                            </a>
+                            <a
+                                href="../process/delete-rdv">
+                                <img src="../assets/images/supprimer.png" alt="supprimer patient" class=" hover:scale-110 transition">
                             </a>
                         </td>
                     </tr>
