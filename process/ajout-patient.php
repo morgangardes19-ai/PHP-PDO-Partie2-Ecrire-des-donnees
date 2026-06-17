@@ -8,11 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
     exit();
 }
 if (!isset($_POST['nom']) || !isset($_POST['prenom']) || !isset($_POST['date']) || !isset($_POST['telephone']) || !isset($_POST['email'])) {
-    header("Location: ../public/ajout-patient.php?error=bad-method");
+    header("Location: ../public/ajout-patient.php?error=missing-value");
     exit();
 }
 if (empty($_POST['nom']) || empty($_POST['prenom']) || empty($_POST['date']) || empty($_POST['telephone']) || empty($_POST['email'])) {
-    header("Location: ../public/ajout-patient.php?error=bad-method");
+    header("Location: ../public/ajout-patient.php?error=empty-value");
     exit();
 }
 

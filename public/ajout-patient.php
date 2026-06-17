@@ -1,9 +1,7 @@
 <?php require_once "../utils/db_connect.php";
-
-// var_dump($db);
 ?>
 
-
+<?php require_once "../_partials/_head.php" ?>
 
 <?php
 if (isset($_GET['error'])) {
@@ -14,7 +12,6 @@ if (isset($_GET['error'])) {
     }
 }
 ?>
-<?php require_once "../_partials/_head.php" ?>
 
 <section class="flex justify-center overflow-hidden rounded-xl bg-white shadow-lg">
 

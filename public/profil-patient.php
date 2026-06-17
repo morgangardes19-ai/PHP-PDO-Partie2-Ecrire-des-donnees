@@ -59,22 +59,22 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
         <tbody>
             <tr class="border-b hover:bg-blue-50 transition">
                 <td class="px-6 py-4  text-slate-800 text-center">
-                    <?= $clientUnique['id'] ?>
+                    <?= htmlspecialchars($clientUnique['id']) ?>
                 </td>
                 <td class="text-slate-800 text-center">
-                    <?= $clientUnique['lastname'] ?>
+                    <?= htmlspecialchars($clientUnique['lastname']) ?>
                 </td>
                 <td class="text-slate-800 text-center">
-                    <?= $clientUnique['firstname'] ?>
+                    <?= htmlspecialchars($clientUnique['firstname']) ?>
                 </td>
                 <td class="text-slate-800 text-center">
-                    <?= $clientUnique['birthdate'] ?>
+                    <?= htmlspecialchars($clientUnique['birthdate']) ?>
                 </td>
                 <td class="text-slate-800 text-center">
-                    <?= $clientUnique['phone'] ?>
+                    <?= htmlspecialchars($clientUnique['phone']) ?>
                 </td>
                 <td class="text-slate-800 text-center">
-                    <?= $clientUnique['mail'] ?>
+                    <?= htmlspecialchars($clientUnique['mail']) ?>
                 </td>
             </tr>
         </tbody>

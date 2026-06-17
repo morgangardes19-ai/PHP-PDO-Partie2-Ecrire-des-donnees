@@ -32,12 +32,12 @@ $detailRdv = $request->fetch(PDO::FETCH_ASSOC);
 <?php require_once "../_partials/_head.php" ?>
 
 <section class ="overflow-hidden rounded-xl bg-white shadow-lg flex flex-col justify-center items-center">
-    <p>Prénom : <?= $detailRdv['firstname'] ?></p>
-    <p>Nom : <?= $detailRdv['lastname'] ?></p>
-    <p>Date de naissance : <?= $detailRdv['birthdate'] ?></p>
-    <p>Numéro de téléphone : <?= $detailRdv['phone'] ?></p>
-    <p>Adresse email : <?= $detailRdv['mail'] ?></p>
-    <p>Date et heure du rendez-vous : <?= $detailRdv['datehour'] ?></p>
+    <p>Prénom : <?= htmlspecialchars($detailRdv['firstname']) ?></p>
+    <p>Nom : <?= htmlspecialchars($detailRdv['lastname']) ?></p>
+    <p>Date de naissance : <?= htmlspecialchars($detailRdv['birthdate']) ?></p>
+    <p>Numéro de téléphone : <?= htmlspecialchars($detailRdv['phone']) ?></p>
+    <p>Adresse email : <?= htmlspecialchars($detailRdv['mail']) ?></p>
+    <p>Date et heure du rendez-vous : <?= htmlspecialchars($detailRdv['datehour']) ?></p>
 </section>
 
 <?php require_once "../_partials/_footer.php" ?>

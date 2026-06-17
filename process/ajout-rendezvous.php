@@ -27,7 +27,7 @@ $patient = htmlspecialchars(trim($_POST['patient']));
 
 
 
-$request = $db->prepare("INSERT INTO appointments(datehour, patient_id) VALUE (:datehour, :patient)");
+$request = $db->prepare("INSERT INTO appointments(datehour, patient_id) VALUES (:datehour, :patient)");
 $request->execute([
     ":datehour" => $datehour,
     ":patient" => $patient
