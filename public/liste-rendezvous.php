@@ -69,7 +69,7 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
                                 <img src="../assets/images/stylo.png" alt="modifier patient" class=" hover:scale-110 transition">
                             </a>
                             <a
-                                href="../process/delete-rdv">
+                                href="../process/delete-rdv.php?id=<?= $rdv['id'] ?>">
                                 <img src="../assets/images/supprimer.png" alt="supprimer patient" class=" hover:scale-110 transition">
                             </a>
                         </td>
