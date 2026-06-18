@@ -19,6 +19,17 @@ $patients = $request->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_GET['create']) && !empty($_GET['create'])) {
     $createSuccess = htmlspecialchars(trim($_GET['create']));
 }
+
+// PAGINATION
+$patientsParPage = 5; ////////// LIMIT 5
+if (isset($_GET['page']) && !empty($_GET['search'])) {
+}
+
+$countRequest = $db->query("SELECT COUNT(*) as total FROM patients");
+$count = $countRequest->fetch(PDO::FETCH_ASSOC);
+
+
+// $requestPatients = $db->query("SELECT * FROM patients");
 ?>
 
 <?php require_once "../_partials/_head.php" ?>
@@ -54,7 +65,6 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
             </div>
         </form>
 
-
         <!-- Tableau -->
         <div class="overflow-hidden rounded-xl bg-white shadow-lg">
             <table class="w-full">
@@ -66,9 +76,7 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
                         <th class="px-6 py-4 text-center">Action</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
                     <?php foreach ($patients as $patient) { ?>
                         <tr class="border-b hover:bg-blue-50 transition">
                             <td class="px-6 py-4 font-medium text-slate-800  text-center">
@@ -96,9 +104,7 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
                             </td>
                         </tr>
                     <?php } ?>
-
                 </tbody>
-
             </table>
         </div>
     </section>
