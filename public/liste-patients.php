@@ -1,7 +1,18 @@
 <?php
 require_once "../utils/db_connect.php";
 
-$request = $db->query("SELECT * FROM patients ORDER BY lastname ASC");
+
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $search = htmlspecialchars(trim($_GET['search']));
+    // requete alternative pour trouver seulement certains résultats
+    $request = $db->prepare("SELECT * FROM patients WHERE patients.lastname LIKE :search OR patients.firstname LIKE :search ORDER BY lastname ASC ");
+    $request->execute([
+        ":search" => '%' . $search . '%'
+    ]);
+} else {
+    $request = $db->query("SELECT * FROM patients  ORDER BY lastname ASC ");
+}
+
 $patients = $request->fetchAll(PDO::FETCH_ASSOC);
 
 // On verifie si on a reçu l'information, d'un succès de creation de patient
@@ -33,55 +44,64 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
 
     <?php } ?>
 
-    <!-- Tableau -->
-    <div class="overflow-hidden rounded-xl bg-white shadow-lg">
-        <table class="w-full">
+    <section class="flex flex-col gap-5">
+        <!-- Champ de recherche patient-->
 
-            <thead class="bg-blue-900 text-white">
-                <tr>
-                    <th class="px-6 py-4 text-center">Nom</th>
-                    <th class="px-6 py-4 text-center">Prénom</th>
-                    <th class="px-6 py-4 text-center">Action</th>
-                </tr>
-            </thead>
+        <form action="./liste-patients.php" method="get">
+            <div class="flex flex-col items-center">
+                <label for="search" class="text-2xl font-bold text-blue-900">Champ de recherche patient</label>
+                <input type="search" name="search" id="search" value="<?= $search ?? "" ?>" class="border-2 w-100">
+            </div>
+        </form>
 
-            <tbody>
 
-                <?php foreach ($patients as $patient) { ?>
-                    <tr class="border-b hover:bg-blue-50 transition">
-                        <td class="px-6 py-4 font-medium text-slate-800  text-center">
-                            <?= htmlspecialchars(strtoupper($patient['lastname'])) ?>
-                        </td>
+        <!-- Tableau -->
+        <div class="overflow-hidden rounded-xl bg-white shadow-lg">
+            <table class="w-full">
 
-                        <td class="px-6 py-4 text-slate-600  text-center">
-                            <?= htmlspecialchars($patient['firstname']) ?>
-                        </td>
-
-                        <td class="px-6 py-4 flex justify-center gap-4">
-
-                            <a
-                                href="./profil-patient.php?id=<?= $patient['id'] ?>">
-                                <img src="../assets/images/voir.png" alt="profil patient" class=" hover:scale-110 transition">
-                            </a>
-                            <a
-                                href="./update-patient.php?id=<?= $patient['id'] ?>">
-                                <img src="../assets/images/stylo.png" alt="modifier patient" class=" hover:scale-110 transition">
-                            </a>
-                            <a
-                                href="../process/delete-patient-et-rdv.php?id=<?= $patient['id'] ?>">
-                                <img src="../assets/images/supprimer.png" alt="supprimer patient" class=" hover:scale-110 transition">
-                            </a>
-
-                        </td>
+                <thead class="bg-blue-900 text-white">
+                    <tr>
+                        <th class="px-6 py-4 text-center">Nom</th>
+                        <th class="px-6 py-4 text-center">Prénom</th>
+                        <th class="px-6 py-4 text-center">Action</th>
                     </tr>
+                </thead>
 
-                <?php } ?>
+                <tbody>
 
-            </tbody>
+                    <?php foreach ($patients as $patient) { ?>
+                        <tr class="border-b hover:bg-blue-50 transition">
+                            <td class="px-6 py-4 font-medium text-slate-800  text-center">
+                                <?= htmlspecialchars(strtoupper($patient['lastname'])) ?>
+                            </td>
 
-        </table>
-    </div>
+                            <td class="px-6 py-4 text-slate-600  text-center">
+                                <?= htmlspecialchars($patient['firstname']) ?>
+                            </td>
 
+                            <td class="px-6 py-4 flex justify-center gap-4">
+
+                                <a
+                                    href="./profil-patient.php?id=<?= $patient['id'] ?>">
+                                    <img src="../assets/images/voir.png" alt="profil patient" class=" hover:scale-110 transition">
+                                </a>
+                                <a
+                                    href="./update-patient.php?id=<?= $patient['id'] ?>">
+                                    <img src="../assets/images/stylo.png" alt="modifier patient" class=" hover:scale-110 transition">
+                                </a>
+                                <a
+                                    href="../process/delete-patient-et-rdv.php?id=<?= $patient['id'] ?>">
+                                    <img src="../assets/images/supprimer.png" alt="supprimer patient" class=" hover:scale-110 transition">
+                                </a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+
+                </tbody>
+
+            </table>
+        </div>
+    </section>
     <!-- Bouton retour -->
     <div class="mt-8 flex justify-center">
         <a
