@@ -68,7 +68,6 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
 
     <section class="flex flex-col gap-5">
         <!-- Champ de recherche patient-->
-
         <form action="./liste-patients.php" method="get">
             <div class="flex flex-col items-center">
                 <label for="search" class="text-2xl font-bold text-blue-900">Champ de recherche patient</label>

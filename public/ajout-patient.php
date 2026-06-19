@@ -20,7 +20,7 @@ if (isset($_GET['error'])) {
             <thead>
                 <tr>
                     <th>Informations du patient</th>
-                    <th>Date du rendez-vous</th>
+                    <th>Champ à remplir</th>
                 </tr>
             </thead>
             <tbody>

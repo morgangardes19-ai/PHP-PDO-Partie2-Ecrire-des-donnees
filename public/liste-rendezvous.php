@@ -1,11 +1,58 @@
 <?php
 require_once "../utils/db_connect.php";
 
+// =================== PAGINATION ==============
+$countRequest = $db->query("SELECT COUNT(*) as total FROM appointments");
+$total = $countRequest->fetch()['total'];
+
+$parPage = 3;
+
+$page = htmlspecialchars(trim($_GET['page'] ?? 1));
+
+$offset = ($page - 1) * $parPage;
+$totalPages = ceil($total / $parPage);
+// ==============================================
+
+// ==== Message succès création ====
 if (isset($_GET['create']) && !empty($_GET['create'])) {
     $createSuccess = htmlspecialchars(trim($_GET['create']));
 }
+// =================================
+// if (isset($_GET['search']) && !empty($_GET['search'])) {
+//     $search = htmlspecialchars(trim($_GET['search']));
+//     // requete alternative pour trouver seulement certains résultats
+//     $request = $db->prepare("SELECT * FROM patients WHERE patients.lastname LIKE :search OR patients.firstname LIKE :search ORDER BY lastname ASC LIMIT :lim OFFSET :off");
+//     $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
+//     $request->bindValue(':off', $offset, PDO::PARAM_INT);
+//     $request->execute([
+//         ":search" => '%' . $search . '%',
+//     ]);
+// } else {
+//     $request = $db->prepare("SELECT * FROM patients  ORDER BY lastname ASC LIMIT :lim OFFSET :off");
+//     $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
+//     $request->bindValue(':off', $offset, PDO::PARAM_INT);
+//     $request->execute();
+// }
 
-$request = $db->query("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients JOIN appointments ON patients.id = appointments.patient_id");
+// Modifier requête pour contenir un search pour le champ de recherche + la pagination
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $search = htmlspecialchars(trim($_GET['search']));
+
+    // NOUVELLE REQUÊTE
+    $request = $db->prepare("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients WHERE patients.lastname LIKE :search OR patients.firstname LIKE :search JOIN appointments ON patients.id = appointments.patient_id ORDER BY appointments.datehour DESC LIMIT :lim OFFSET :off");
+    $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
+    $request->bindValue(':off', $offset, PDO::PARAM_INT);
+    $request->execute([
+        ":search" => '%' . $search . '%',
+    ]);
+} else {
+    $request = $db->prepare("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients JOIN appointments ON patients.id = appointments.patient_id ORDER BY appointments.datehour DESC LIMIT :lim OFFSET :off");
+    $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
+    $request->bindValue(':off', $offset, PDO::PARAM_INT);
+    $request->execute();
+}
+// REQUÊTE AVANT LE CHANGEMENT :
+// $request = $db->query("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients JOIN appointments ON patients.id = appointments.patient_id ORDER BY appointments.datehour DESC");
 
 $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -26,12 +73,21 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
         </p>
     </div>
 
-     <!-- Message de confirmation de creation de patient -->
+    <!-- Message de confirmation de creation de patient -->
     <?php if (isset($createSuccess) && $createSuccess === "1") { ?>
         <div class="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 text-green-700">
             Le rendez-vous a bien été ajouté à la liste.
         </div>
     <?php } ?>
+
+
+    <!-- Champ de recherche patient-->
+    <form action="./liste-rendezvous.php" method="get">
+        <div class="flex flex-col items-center">
+            <label for="search" class="text-2xl font-bold text-blue-900">Champ de recherche patient</label>
+            <input type="search" name="search" id="search" value="<?= $search ?? "" ?>" class="border-2 w-100">
+        </div>
+    </form>
 
     <!-- Tableau -->
     <div class="overflow-hidden rounded-xl bg-white shadow-lg">
@@ -77,6 +133,22 @@ $rdvs = $request->fetchAll(PDO::FETCH_ASSOC);
                 <?php } ?>
             </tbody>
         </table>
+    </div>
+    <!-- Navigation pagination -->
+    <div class="flex justify-center gap-2 mt-6">
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <?php if ($i == $page): ?>
+                <span class="px-4 py-2 bg-blue-900 text-white rounded-lg"><?= $i ?></span>
+            <?php else: ?>
+                <a href="?page=<?= $i ?><?= isset($search) ? '&search=' . $search : '' ?>"
+                    class="px-4 py-2 bg-white border border-blue-900 text-blue-900 rounded-lg hover:bg-blue-100 transition">
+                    <?= $i ?>
+                </a>
+            <?php endif; ?>
+        <?php endfor; ?>
+    </div>
+    <div class="flex justify-center">
+        <p>Total des pages : <?= $totalPages ?></p>
     </div>
     <div class="mt-8 flex justify-center">
         <a
