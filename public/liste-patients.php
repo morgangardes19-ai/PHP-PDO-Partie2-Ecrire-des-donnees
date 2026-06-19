@@ -1,6 +1,23 @@
 <?php
 require_once "../utils/db_connect.php";
 
+// =================== PAGINATION ==============
+$countRequest = $db->query("SELECT COUNT(*) as total FROM patients");
+$total = $countRequest->fetch()['total'];
+
+$parPage = 3;
+
+$page = htmlspecialchars(trim($_GET['page'] ?? 1));
+
+// if (isset($_GET['page'])) {
+//     $page = $_GET['page'];
+// } else {
+//     $page = 1;
+// }
+
+$offset = ($page - 1) * $parPage;
+$totalPages = ceil($total / $parPage);
+// ==============================================
 
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search = htmlspecialchars(trim($_GET['search']));
@@ -24,16 +41,6 @@ $patients = $request->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_GET['create']) && !empty($_GET['create'])) {
     $createSuccess = htmlspecialchars(trim($_GET['create']));
 }
-
-// PAGINATION /////////
-$countRequest = $db->query("SELECT COUNT(*) as total FROM patients");
-$total = $countRequest->fetch(PDO::FETCH_ASSOC);
-
-$parPage = 5;
-$page = htmlspecialchars(trim($_GET['page'])) ?? 1;
-$offset = ($page - 1) * $parPage;
-$totalPages = ceil($total / $parPage);
-// ////////////////////
 ?>
 
 <?php require_once "../_partials/_head.php" ?>
@@ -111,6 +118,22 @@ $totalPages = ceil($total / $parPage);
                 </tbody>
             </table>
         </div>
+        <!-- Navigation pagination -->
+        <div class="flex justify-center gap-2 mt-6">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <?php if ($i == $page): ?>
+                    <span class="px-4 py-2 bg-blue-900 text-white rounded-lg"><?= $i ?></span>
+                <?php else: ?>
+                    <a href="?page=<?= $i ?><?= isset($search) ? '&search=' . $search : '' ?>"
+                        class="px-4 py-2 bg-white border border-blue-900 text-blue-900 rounded-lg hover:bg-blue-100 transition">
+                        <?= $i ?>
+                    </a>
+                <?php endif; ?>
+            <?php endfor; ?>
+        </div>
+        <div class="flex justify-center">
+            <p>Total des pages : <?= $totalPages ?></p>
+        </div>
     </section>
     <!-- Bouton retour -->
     <div class="mt-8 flex justify-center">
@@ -120,7 +143,6 @@ $totalPages = ceil($total / $parPage);
             Ajouter un nouveau patient
         </a>
     </div>
-
 </div>
 
 <?php require_once "../_partials/_footer.php" ?>
