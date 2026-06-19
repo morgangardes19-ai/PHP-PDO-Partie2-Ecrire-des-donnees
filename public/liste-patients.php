@@ -5,12 +5,17 @@ require_once "../utils/db_connect.php";
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search = htmlspecialchars(trim($_GET['search']));
     // requete alternative pour trouver seulement certains résultats
-    $request = $db->prepare("SELECT * FROM patients WHERE patients.lastname LIKE :search OR patients.firstname LIKE :search ORDER BY lastname ASC ");
+    $request = $db->prepare("SELECT * FROM patients WHERE patients.lastname LIKE :search OR patients.firstname LIKE :search ORDER BY lastname ASC LIMIT :lim OFFSET :off");
+    $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
+    $request->bindValue(':off', $offset, PDO::PARAM_INT);
     $request->execute([
-        ":search" => '%' . $search . '%'
+        ":search" => '%' . $search . '%',
     ]);
 } else {
-    $request = $db->query("SELECT * FROM patients  ORDER BY lastname ASC ");
+    $request = $db->prepare("SELECT * FROM patients  ORDER BY lastname ASC LIMIT :lim OFFSET :off");
+    $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
+    $request->bindValue(':off', $offset, PDO::PARAM_INT);
+    $request->execute();
 }
 
 $patients = $request->fetchAll(PDO::FETCH_ASSOC);
@@ -20,16 +25,15 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
     $createSuccess = htmlspecialchars(trim($_GET['create']));
 }
 
-// PAGINATION
-$patientsParPage = 5; ////////// LIMIT 5
-if (isset($_GET['page']) && !empty($_GET['search'])) {
-}
-
+// PAGINATION /////////
 $countRequest = $db->query("SELECT COUNT(*) as total FROM patients");
-$count = $countRequest->fetch(PDO::FETCH_ASSOC);
+$total = $countRequest->fetch(PDO::FETCH_ASSOC);
 
-
-// $requestPatients = $db->query("SELECT * FROM patients");
+$parPage = 5;
+$page = htmlspecialchars(trim($_GET['page'])) ?? 1;
+$offset = ($page - 1) * $parPage;
+$totalPages = ceil($total / $parPage);
+// ////////////////////
 ?>
 
 <?php require_once "../_partials/_head.php" ?>
