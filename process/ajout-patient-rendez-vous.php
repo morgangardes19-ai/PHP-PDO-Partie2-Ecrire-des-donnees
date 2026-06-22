@@ -37,12 +37,15 @@ $success = $requestAjoutPatient->execute([
     ":email" => $email
 ]);
 
-$request2 = $db->prepare("INSERT INTO appointments (datehour) VALUES (:datehour)");
-$request2->execute([
-    ":datehour" => $datehour
+$patientId = $db->lastInsertId();
+
+$requestAjoutRdv = $db->prepare("INSERT INTO appointments (datehour, patient_id) VALUES (:datehour, :patient_id)");
+$success = $requestAjoutRdv->execute([
+    ":datehour" => $datehour,
+    ":patient_id" => $patientId
 ]);
 
-header("Location: ../public/ajout-patient-rendez-vous.php");
+header("Location: ../public/ajout-patient-rendez-vous.php?create=$success");
 exit();
 // ==================================================
 ?>

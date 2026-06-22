@@ -18,33 +18,18 @@ if (isset($_GET['create']) && !empty($_GET['create'])) {
     $createSuccess = htmlspecialchars(trim($_GET['create']));
 }
 // =================================
-// if (isset($_GET['search']) && !empty($_GET['search'])) {
-//     $search = htmlspecialchars(trim($_GET['search']));
-//     // requete alternative pour trouver seulement certains résultats
-//     $request = $db->prepare("SELECT * FROM patients WHERE patients.lastname LIKE :search OR patients.firstname LIKE :search ORDER BY lastname ASC LIMIT :lim OFFSET :off");
-//     $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
-//     $request->bindValue(':off', $offset, PDO::PARAM_INT);
-//     $request->execute([
-//         ":search" => '%' . $search . '%',
-//     ]);
-// } else {
-//     $request = $db->prepare("SELECT * FROM patients  ORDER BY lastname ASC LIMIT :lim OFFSET :off");
-//     $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
-//     $request->bindValue(':off', $offset, PDO::PARAM_INT);
-//     $request->execute();
-// }
 
 // Modifier requête pour contenir un search pour le champ de recherche + la pagination
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search = htmlspecialchars(trim($_GET['search']));
 
-    // NOUVELLE REQUÊTE
-    $request = $db->prepare("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients WHERE patients.lastname LIKE :search OR patients.firstname LIKE :search JOIN appointments ON patients.id = appointments.patient_id ORDER BY appointments.datehour DESC LIMIT :lim OFFSET :off");
+
+
+    $request = $db->prepare("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients JOIN appointments ON patients.id = appointments.patient_id WHERE patients.lastname LIKE :search OR patients.firstname LIKE :search ORDER BY appointments.datehour DESC LIMIT :lim OFFSET :off");
     $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
     $request->bindValue(':off', $offset, PDO::PARAM_INT);
-    $request->execute([
-        ":search" => '%' . $search . '%',
-    ]);
+    $request->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+    $request->execute();
 } else {
     $request = $db->prepare("SELECT patients.lastname, patients.firstname, appointments.datehour, appointments.id FROM patients JOIN appointments ON patients.id = appointments.patient_id ORDER BY appointments.datehour DESC LIMIT :lim OFFSET :off");
     $request->bindValue(':lim', $parPage, PDO::PARAM_INT);
